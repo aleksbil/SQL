@@ -1,9 +1,13 @@
-/*******************************************************************************
-Description: Weekly Stock Projection with Recursive Logic
-Author: aleksbil
-Topic: Supply Chain / XAI
-Logic: Recursive CTE for week-over-week stock balance (SO vs FCST)
-*******************************************************************************/
+/*
+  PROJECT: Supply Chain Analytics
+  DDI: Weekly Inventory Projection Model
+  DIALECT: Snowflake SQL
+  AUTHOR: aleksbil
+  
+  DESCRIPTION: 
+  This script calculates a recursive week-over-week stock projection 
+  considering production shifts, transport minimums, and demand scenarios (SO vs FCST).
+*/
 
 -- Base dataset: weekly supply planning data
 with base as (
