@@ -1,0 +1,18 @@
+# Weekly Inventory & Stock Projection Model
+
+### Overview
+This script performs a recursive, week-over-week simulation of inventory levels. It is designed to replace static reports with a dynamic projection that accounts for rolling stock balances and production lead times.
+
+### XAI (Explainable AI) Approach
+A core principle of this query is **Transparency**. Instead of providing a single "Final Stock" number, the model exposes all contributing factors:
+- **Shifted Production:** Accounts for production arriving from secondary locations.
+- **Supply Constraints:** Explicitly shows the impact of `Min Transport` and `Min External` orders.
+- **Dual Scenario Analysis:** Compares stock levels based on **Sales Orders (SO)** vs. **Forecast Demand (FCST)**.
+
+By deconstructing the final result, planners can explain exactly *why* a stockout or surplus is predicted for a specific week.
+
+### Technical Implementation
+1. **Base Dataset Preparation:** Standardizes date formats and handles `NULL` values using `IFNULL` to ensure calculation stability.
+2. **Recursive CTE:** Iteratively carries over the closing stock of week $n$ as the opening stock for week $n+1$.
+3. **Location-Based Logic:** Dynamically handles production receipts based on specific site IDs (e.g., Central Hub vs. Satellite Locations).
+4. **Final Projection:** Joins operational data with the `ITEM_MASTER` hierarchy for high-level reporting (Hierarchy L1-L3).
